@@ -23,20 +23,20 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/splatboydev/gluon-template">
+  <a href="https://github.com/splatboydev/Freon-Browser">
     <!--<img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-<h3 align="center">Gluon Templater</h3>
+<h3 align="center">Freon Browser</h3>
 
   <p align="center">
-    <insert description here>
+    A firefox fork for developers by (a) developer(s).
     <br />
     <br />
     <br />
-    <a href="https://github.com/splatboydev/gluon-template/issues">Report Bug</a>
+    <a href="https://github.com/splatboydev/Freon-Browser/issues">Report Bug</a>
     ·
-    <a href="https://github.com/splatboydev/gluon-template/issues">Request Feature</a>
+    <a href="https://github.com/splatboydev/Freon-Browser/issues">Request Feature</a>
   </p>
 </div>
 
@@ -72,7 +72,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-description
+Freon Browser is mainly a hobby project to add/remove firefox features I dis/like.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -107,11 +107,8 @@ instructions
 ## Roadmap
 
 - [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
 
-See the [open issues](https://github.com/splatboydev/gluon-template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/splatboydev/Freon-Browser/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -149,7 +146,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Splatboy Dev - contact@splatboy-dev.xyz
 
-Project Link: [https://github.com/splatboydev/gluon-template](https://github.com/splatboydev/gluon-template)
+Project Link: [https://github.com/splatboydev/Freon-Browser](https://github.com/splatboydev/Freon-Browser)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
