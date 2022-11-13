@@ -1,0 +1,13 @@
+{
+  "name": "Example browser",
+  "vendor": "Example company",
+  "appId": "com.example.browser",
+  "binaryName": "example-browser",
+  "version": {
+    "product": "firefox",
+    "version": "106.0.5"
+  },
+  "buildOptions": {
+    "windowsUseSymbolicLinks": false
+  }
+}
