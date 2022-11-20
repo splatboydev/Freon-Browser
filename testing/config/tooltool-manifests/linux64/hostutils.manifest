@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "host-utils-103.0a1.en-US.linux-x86_64.tar.gz",
+    "size": 112045741,
+    "algorithm": "sha512",
+    "digest": "a23c8bfcea663a39adecddcd9564a4d6019533a2fbf2577c876d409d5ceed09627cab64afe833c75d4a167ef7fc9f5449106e5906f4041ac5feb157ebfc30e4b",
+    "unpack": true,
+    "visibility": "public"
+  }
+]

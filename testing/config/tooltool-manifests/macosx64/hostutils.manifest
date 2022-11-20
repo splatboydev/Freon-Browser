@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "host-utils-103.0a1.en-US.mac.tar.gz",
+    "size": 152932731,
+    "algorithm": "sha512",
+    "digest": "dca1f742fa4f0c482e2ab5823ff563fcf8487261650f305ec4b43a06dccdba7bf67e0fd6919cef997b6dd4525f3fca0e6f1579f9abb351ed55394bf7c82a04a1",
+    "unpack": true,
+    "visibility": "public"
+  }
+]

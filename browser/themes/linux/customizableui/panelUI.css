@@ -1,0 +1,37 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@import "chrome://browser/skin/customizableui/panelUI-shared.css";
+
+#notification-popup {
+  margin-block: -4px;
+}
+
+#BMB_bookmarksPopup menupopup {
+  margin-top: -9px; /* The top component of --panel-subview-body-padding and the 1px border */
+}
+
+#PlacesToolbar menupopup {
+  color: var(--arrowpanel-color);
+  --panel-background: var(--arrowpanel-background);
+  --panel-border-color: var(--arrowpanel-border-color);
+}
+
+menupopup::part(drop-indicator) {
+  /* To account for the shadow margin + border of the panel */
+  margin-inline-start: 5px;
+}
+
+/* Styled differently to allow for user interaction with menu separator */
+#PlacesToolbar menupopup[placespopup="true"] menuseparator {
+  appearance: none !important;
+}
+
+menuitem.subviewbutton {
+  appearance: none !important;
+}
+
+.subviewradio > .radio-label-box {
+  appearance: none;
+}
