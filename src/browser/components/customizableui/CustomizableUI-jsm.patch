@@ -1,0 +1,12 @@
+diff --git a/browser/components/customizableui/CustomizableUI.jsm b/browser/components/customizableui/CustomizableUI.jsm
+index 6762a59f2d36681146ce833c045648d2f6817464..11d446e845dc1f9b2b50249a6746a23dc2c326a9 100644
+--- a/browser/components/customizableui/CustomizableUI.jsm
++++ b/browser/components/customizableui/CustomizableUI.jsm
+@@ -243,7 +243,6 @@ var CustomizableUIInternal = {
+       "spring",
+       "urlbar-container",
+       "spring",
+-      "save-to-pocket-button",
+       "downloads-button",
+       AppConstants.MOZ_DEV_EDITION ? "developer-button" : null,
+       "fxa-toolbar-menu-button",
