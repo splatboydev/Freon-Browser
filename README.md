@@ -80,7 +80,7 @@ Freon Browser is mainly a hobby project to add/remove firefox features I dis/lik
 ### Built With
 
 * Gluon ([gluon-build](https://github.com/pulse-browser/gluon))
-* NPM
+* npm
 * Firefox
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
