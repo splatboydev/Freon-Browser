@@ -1,6 +1,7 @@
-
+.vscode/
 .dotbuild/
 .gluon
 engine/
 firefox-*/
 node_modules/
+upx.exe

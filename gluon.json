@@ -1,11 +1,11 @@
 {
-  "name": "Example browser",
-  "vendor": "Example company",
-  "appId": "com.example.browser",
-  "binaryName": "example-browser",
+  "name": "Freon Browser",
+  "vendor": "Splatboy Dev",
+  "appId": "xyz.splatboy-dev.freon",
+  "binaryName": "freon-browser",
   "version": {
     "product": "firefox",
-    "version": "106.0.5"
+    "version": "107.0"
   },
   "buildOptions": {
     "windowsUseSymbolicLinks": false
