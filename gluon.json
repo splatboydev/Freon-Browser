@@ -5,9 +5,32 @@
   "binaryName": "freon-browser",
   "version": {
     "product": "firefox",
-    "version": "107.0"
+    "version": "107.0.1"
   },
   "buildOptions": {
     "windowsUseSymbolicLinks": false
+  },
+  "addons": {
+    "ubo-scope": {
+      "platform": "github",
+      "id": "uBO-Scope@raymondhill.net",
+      "repo": "gorhill/uBO-Scope",
+      "version": "0.1.12",
+      "fileGlob": "uBO-Scope.firefox.xpi"
+    },
+    "ublock": {
+      "platform": "github",
+      "id": "uBlock0@raymondhill.net",
+      "repo": "gorhill/uBlock",
+      "version": "1.45.3b15",
+      "fileGlob": "uBlock0_*.firefox(.signed)?.xpi"
+    }
+  },
+  "brands": {},
+  "license": {
+    "ignoredFiles": [
+      ".*\\.json"
+    ],
+    "licenseType": "MPL-2.0"
   }
 }
