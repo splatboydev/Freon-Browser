@@ -1,17 +1,18 @@
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
-index 14ecab77149f5645e24c8bffff57c223f64730bb..300fb9cd1bdaf4eb11de2f48b7576680a2c38aba 100644
+index f888b61c54b0a9eb63d0459ec91d1818a93b2ac4..25fd5195b1e3c6b2d7912f21b32f1e8fb9e14005 100644
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -1391,7 +1391,6 @@ pref("services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.h
+@@ -1396,7 +1396,7 @@ pref("services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.h
  pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includeVisited", true);
  pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includeBookmarks", true);
  pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includeDownloads", true);
 -pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket", true);
++pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket", false);
  // Some linux distributions disable just pocket by default.
  pref("services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights.includePocket", false);
  pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.rows", true);
-@@ -2116,15 +2115,17 @@ pref("browser.migrate.chrome.history.limit", 2000);
- pref("browser.migrate.chrome.history.maxAgeInDays", 180);
+@@ -2145,15 +2145,15 @@ pref("browser.migrate.opera.enabled", false);
+ 
  pref("browser.migrate.showBookmarksToolbarAfterMigration", true);
  
 -pref("extensions.pocket.api", "api.getpocket.com");
@@ -20,14 +21,12 @@ index 14ecab77149f5645e24c8bffff57c223f64730bb..300fb9cd1bdaf4eb11de2f48b7576680
 -pref("extensions.pocket.site", "getpocket.com");
 -pref("extensions.pocket.onSaveRecs", true);
 -pref("extensions.pocket.onSaveRecs.locales", "en-US,en-GB,en-CA");
-+pref('extensions.pocket.api', '');
-+pref('extensions.pocket.enabled', false);
-+pref('extensions.pocket.oAuthConsumerKey', '');
-+pref('extensions.pocket.site', '');
-+pref('extensions.pocket.onSaveRecs', false);
++pref("extensions.pocket.enabled", false);
++pref("extensions.pocket.api", '');
++pref("extensions.pocket.oAuthConsumerKey", ' ');
++pref("extensions.pocket.site", '');
++pref("extensions.pocket.onSaveRecs", false);
 +pref('extensions.pocket.onSaveRecs.locales', '');
-+
-+user_pref('browser.newtabpage.activity-stream.section.highlights.includePocket', false);
  
  // Enable Pocket button home panel for non link pages.
 -pref("extensions.pocket.showHome", true);
@@ -35,10 +34,3 @@ index 14ecab77149f5645e24c8bffff57c223f64730bb..300fb9cd1bdaf4eb11de2f48b7576680
  
  // Control what version of the logged out doorhanger is displayed
  // Possibilities are: `control`, `control-one-button`, `variant_a`, `variant_b`, `variant_c`
-@@ -2744,4 +2745,4 @@ pref("browser.pdfjs.feature-tour", "{\"message\":\"PDF_JS_FEATURE_TOUR\",\"scree
- // We only want to enable this pref for Desktop nightlies.
- #ifdef NIGHTLY_BUILD
-   pref("dom.sitepermsaddon-provider.enabled", true);
--#endif
-+#endif
-\ No newline at end of file

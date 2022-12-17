@@ -1,0 +1,30 @@
+diff --git a/toolkit/modules/AppConstants.sys.mjs b/toolkit/modules/AppConstants.sys.mjs
+index 59ba540c6dcbc526b56ace948fd6b61a4ffa48a0..65cc39fca9fd658a9754eedebecdfed023bea418 100644
+--- a/toolkit/modules/AppConstants.sys.mjs
++++ b/toolkit/modules/AppConstants.sys.mjs
+@@ -87,7 +87,7 @@ export var AppConstants = Object.freeze({
+ 
+   MOZ_DATA_REPORTING:
+ #ifdef MOZ_DATA_REPORTING
+-  true,
++  false,
+ #else
+   false,
+ #endif
+@@ -100,15 +100,11 @@ export var AppConstants = Object.freeze({
+ #endif
+ 
+   MOZ_TELEMETRY_REPORTING:
+-#ifdef MOZ_TELEMETRY_REPORTING
+-  true,
+-#else
+   false,
+-#endif
+ 
+   MOZ_TELEMETRY_ON_BY_DEFAULT:
+ #ifdef MOZ_TELEMETRY_ON_BY_DEFAULT
+-  true,
++  false,
+ #else
+   false,
+ #endif

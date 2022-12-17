@@ -1,0 +1,153 @@
+diff --git a/browser/components/BrowserGlue.jsm b/browser/components/BrowserGlue.jsm
+index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd36729a50070e 100644
+--- a/browser/components/BrowserGlue.jsm
++++ b/browser/components/BrowserGlue.jsm
+@@ -23,9 +23,9 @@ ChromeUtils.defineESModuleGetters(lazy, {
+   AppMenuNotifications: "resource://gre/modules/AppMenuNotifications.sys.mjs",
+   BookmarkHTMLUtils: "resource://gre/modules/BookmarkHTMLUtils.sys.mjs",
+   BookmarkJSONUtils: "resource://gre/modules/BookmarkJSONUtils.sys.mjs",
+-  BrowserSearchTelemetry: "resource:///modules/BrowserSearchTelemetry.sys.mjs",
++  //BrowserSearchTelemetry: "resource:///modules/BrowserSearchTelemetry.sys.mjs",
+   BuiltInThemes: "resource:///modules/BuiltInThemes.sys.mjs",
+-  DAPTelemetrySender: "resource://gre/modules/DAPTelemetrySender.sys.mjs",
++  //DAPTelemetrySender: "resource://gre/modules/DAPTelemetrySender.sys.mjs",
+   DeferredTask: "resource://gre/modules/DeferredTask.sys.mjs",
+   DownloadsViewableInternally:
+     "resource:///modules/DownloadsViewableInternally.sys.mjs",
+@@ -43,7 +43,7 @@ ChromeUtils.defineESModuleGetters(lazy, {
+   PrivateBrowsingUtils: "resource://gre/modules/PrivateBrowsingUtils.sys.mjs",
+   QuickSuggest: "resource:///modules/QuickSuggest.sys.mjs",
+   ScreenshotsUtils: "resource:///modules/ScreenshotsUtils.sys.mjs",
+-  SearchSERPTelemetry: "resource:///modules/SearchSERPTelemetry.sys.mjs",
++  //SearchSERPTelemetry: "resource:///modules/SearchSERPTelemetry.sys.mjs",
+   ShortcutUtils: "resource://gre/modules/ShortcutUtils.sys.mjs",
+   SnapshotMonitor: "resource:///modules/SnapshotMonitor.sys.mjs",
+   UrlbarPrefs: "resource:///modules/UrlbarPrefs.sys.mjs",
+@@ -62,7 +62,7 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
+   ASRouter: "resource://activity-stream/lib/ASRouter.jsm",
+   AsyncShutdown: "resource://gre/modules/AsyncShutdown.jsm",
+   Blocklist: "resource://gre/modules/Blocklist.jsm",
+-  BrowserUsageTelemetry: "resource:///modules/BrowserUsageTelemetry.jsm",
++  //BrowserUsageTelemetry: "resource:///modules/BrowserUsageTelemetry.jsm",
+   BrowserUIUtils: "resource:///modules/BrowserUIUtils.jsm",
+   BrowserWindowTracker: "resource:///modules/BrowserWindowTracker.jsm",
+   ContextualIdentityService:
+@@ -101,7 +101,7 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
+     "resource://messaging-system/lib/SpecialMessageActions.jsm",
+   TabCrashHandler: "resource:///modules/ContentCrashHandlers.jsm",
+   TabUnloader: "resource:///modules/TabUnloader.jsm",
+-  TelemetryUtils: "resource://gre/modules/TelemetryUtils.jsm",
++  //TelemetryUtils: "resource://gre/modules/TelemetryUtils.jsm",
+   TRRRacer: "resource:///modules/TRRPerformance.jsm",
+   UIState: "resource://services-sync/UIState.jsm",
+ });
+@@ -693,23 +693,6 @@ let JSWINDOWACTORS = {
+     enablePreference: "screenshots.browser.component.enabled",
+   },
+ 
+-  SearchSERPTelemetry: {
+-    parent: {
+-      moduleURI: "resource:///actors/SearchSERPTelemetryParent.jsm",
+-    },
+-    child: {
+-      moduleURI: "resource:///actors/SearchSERPTelemetryChild.jsm",
+-      events: {
+-        DOMContentLoaded: {},
+-        pageshow: { mozSystemGroup: true },
+-        // The 'unload' event is only used to clean up state, and should not
+-        // force actor creation.
+-        unload: { createActor: false },
+-        load: { mozSystemGroup: true, capture: true },
+-      },
+-    },
+-  },
+-
+   ShieldFrame: {
+     parent: {
+       moduleURI: "resource://normandy-content/ShieldFrameParent.jsm",
+@@ -1064,12 +1047,6 @@ BrowserGlue.prototype = {
+         } catch (ex) {
+           Cu.reportError(ex);
+         }
+-        let win = lazy.BrowserWindowTracker.getTopWindow();
+-        lazy.BrowserSearchTelemetry.recordSearch(
+-          win.gBrowser.selectedBrowser,
+-          engine,
+-          "urlbar"
+-        );
+         break;
+       case "browser-search-engine-modified":
+         // Ensure we cleanup the hiddenOneOffs pref when removing
+@@ -1552,11 +1529,6 @@ BrowserGlue.prototype = {
+ 
+     ChromeUtils.addProfilerMarker("earlyBlankFirstPaint", startTime);
+     win.openTime = Cu.now();
+-
+-    let { TelemetryTimestamps } = ChromeUtils.import(
+-      "resource://gre/modules/TelemetryTimestamps.jsm"
+-    );
+-    TelemetryTimestamps.add("blankWindowShown");
+   },
+ 
+   _firstWindowTelemetry(aWindow) {
+@@ -1983,9 +1955,6 @@ BrowserGlue.prototype = {
+           this._bookmarksBackupIdleTime = null;
+         }
+       },
+-
+-      () => lazy.BrowserUsageTelemetry.uninit(),
+-      () => lazy.SearchSERPTelemetry.uninit(),
+       () => lazy.Interactions.uninit(),
+       () => lazy.PageDataService.uninit(),
+       () => lazy.PageThumbs.uninit(),
+@@ -2253,9 +2222,6 @@ BrowserGlue.prototype = {
+     }
+     this._windowsWereRestored = true;
+ 
+-    lazy.BrowserUsageTelemetry.init();
+-    lazy.SearchSERPTelemetry.init();
+-
+     lazy.Interactions.init();
+     lazy.PageDataService.init();
+     lazy.ExtensionsUI.init();
+@@ -2373,7 +2339,7 @@ BrowserGlue.prototype = {
+       },
+ 
+       {
+-        condition: lazy.TelemetryUtils.isTelemetryEnabled,
++        condition: false,
+         task: () => {
+           lazy.PlacesDBUtils.telemetry().catch(console.error);
+         },
+@@ -2844,16 +2810,6 @@ BrowserGlue.prototype = {
+         },
+       },
+ 
+-      {
+-        condition: Services.prefs.getBoolPref(
+-          "toolkit.telemetry.dap_enabled",
+-          false
+-        ),
+-        task: () => {
+-          lazy.DAPTelemetrySender.startup();
+-        },
+-      },
+-
+       {
+         task: () => {
+           // Use idleDispatch a second time to run this after the per-window
+@@ -2951,14 +2907,10 @@ BrowserGlue.prototype = {
+         }
+       },
+ 
+-      () => lazy.BrowserUsageTelemetry.reportProfileCount(),
+-
+       () => lazy.OsEnvironment.reportAllowedAppSources(),
+ 
+       () => Services.search.runBackgroundChecks(),
+ 
+-      () => lazy.BrowserUsageTelemetry.reportInstallationTelemetry(),
+-
+       async () => {
+         let win = lazy.BrowserWindowTracker.getTopWindow({ private: false });
+         if (!win) {

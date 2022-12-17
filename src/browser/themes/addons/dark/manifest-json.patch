@@ -1,0 +1,13 @@
+diff --git a/browser/themes/addons/dark/manifest.json b/browser/themes/addons/dark/manifest.json
+index 3ab1378a042996445ec77c8cad46b0fc44604d70..9aab701fd7a7b49f315d182d62e75d24c50a7d12 100644
+--- a/browser/themes/addons/dark/manifest.json
++++ b/browser/themes/addons/dark/manifest.json
+@@ -16,7 +16,7 @@
+ 
+   "theme": {
+     "colors": {
+-      "tab_background_text": "#fbfbfe",
++      "tab_background_text": "rgb(20,20,20)",
+       "tab_selected": "rgb(66,65,77)",
+       "tab_text": "rgb(251,251,254)",
+       "icons": "rgb(251,251,254)",
