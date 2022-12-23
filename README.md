@@ -89,15 +89,23 @@ Freon Browser is mainly a hobby project to add/remove firefox features I dis/lik
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-insert here
+To start working on Freon, all you need is to install all of the prerequisites.
 
 ### Prerequisites
-prereqs
+#### Common
+You need npm >= 8.0.0, and gluon-build@next preferably latest.
 
-### Installation
+#### For Windows
+On Windows, all commands must be run inside of a MozillaBuild shell. This is the only difference.
 
-instructions
+#### For MacOS
+You need GnuTar installed. The bootstrap will take care of everything else.
+
+#### For Linux
+Just install the neccessary common reqs.
+<br>
+### Compilation
+Once you have all the prerequisites for your OS/distro, simply run gluon bootstrap to download all the assorted components for your OS. After that, run gluon download to download the Firefox source, gluon import to import my changes and gluon b to build. Once it's finished building, run gluon r to use your firefox! If you want to package it, run gluon pack, but it doesn't work 10/10 times.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
