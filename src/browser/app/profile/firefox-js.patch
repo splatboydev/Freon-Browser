@@ -1,5 +1,5 @@
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
-index f888b61c54b0a9eb63d0459ec91d1818a93b2ac4..25fd5195b1e3c6b2d7912f21b32f1e8fb9e14005 100644
+index f888b61c54b0a9eb63d0459ec91d1818a93b2ac4..13679152febceea5d3e0e15f5f5e08fb8268617d 100644
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
 @@ -1396,7 +1396,7 @@ pref("services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.h
@@ -11,7 +11,7 @@ index f888b61c54b0a9eb63d0459ec91d1818a93b2ac4..25fd5195b1e3c6b2d7912f21b32f1e8f
  // Some linux distributions disable just pocket by default.
  pref("services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights.includePocket", false);
  pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.rows", true);
-@@ -2145,15 +2145,15 @@ pref("browser.migrate.opera.enabled", false);
+@@ -2145,15 +2145,8 @@ pref("browser.migrate.opera.enabled", false);
  
  pref("browser.migrate.showBookmarksToolbarAfterMigration", true);
  
@@ -21,16 +21,22 @@ index f888b61c54b0a9eb63d0459ec91d1818a93b2ac4..25fd5195b1e3c6b2d7912f21b32f1e8f
 -pref("extensions.pocket.site", "getpocket.com");
 -pref("extensions.pocket.onSaveRecs", true);
 -pref("extensions.pocket.onSaveRecs.locales", "en-US,en-GB,en-CA");
-+pref("extensions.pocket.enabled", false);
-+pref("extensions.pocket.api", '');
-+pref("extensions.pocket.oAuthConsumerKey", ' ');
-+pref("extensions.pocket.site", '');
-+pref("extensions.pocket.onSaveRecs", false);
-+pref('extensions.pocket.onSaveRecs.locales', '');
- 
+-
  // Enable Pocket button home panel for non link pages.
 -pref("extensions.pocket.showHome", true);
 +pref("extensions.pocket.showHome", false);
  
  // Control what version of the logged out doorhanger is displayed
  // Possibilities are: `control`, `control-one-button`, `variant_a`, `variant_b`, `variant_c`
+@@ -2771,3 +2764,10 @@ pref("browser.pdfjs.feature-tour", "{\"screen\":\"FEATURE_CALLOUT_1\",\"complete
+ 
+ // Enables the cookie banner desktop UI.
+ pref("cookiebanners.ui.desktop.enabled", false);
++
++pref("extensions.pocket.enabled", false);
++pref("extensions.pocket.api", '');
++pref("extensions.pocket.oAuthConsumerKey", ' ');
++pref("extensions.pocket.site", '');
++pref("extensions.pocket.onSaveRecs", false);
++pref('extensions.pocket.onSaveRecs.locales', '');
+\ No newline at end of file
