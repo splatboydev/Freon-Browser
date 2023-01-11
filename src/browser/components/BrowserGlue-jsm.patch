@@ -1,47 +1,58 @@
 diff --git a/browser/components/BrowserGlue.jsm b/browser/components/BrowserGlue.jsm
-index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd36729a50070e 100644
+index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527637d8e16 100644
 --- a/browser/components/BrowserGlue.jsm
 +++ b/browser/components/BrowserGlue.jsm
-@@ -23,9 +23,9 @@ ChromeUtils.defineESModuleGetters(lazy, {
+@@ -23,9 +23,7 @@ ChromeUtils.defineESModuleGetters(lazy, {
    AppMenuNotifications: "resource://gre/modules/AppMenuNotifications.sys.mjs",
    BookmarkHTMLUtils: "resource://gre/modules/BookmarkHTMLUtils.sys.mjs",
    BookmarkJSONUtils: "resource://gre/modules/BookmarkJSONUtils.sys.mjs",
 -  BrowserSearchTelemetry: "resource:///modules/BrowserSearchTelemetry.sys.mjs",
-+  //BrowserSearchTelemetry: "resource:///modules/BrowserSearchTelemetry.sys.mjs",
    BuiltInThemes: "resource:///modules/BuiltInThemes.sys.mjs",
 -  DAPTelemetrySender: "resource://gre/modules/DAPTelemetrySender.sys.mjs",
-+  //DAPTelemetrySender: "resource://gre/modules/DAPTelemetrySender.sys.mjs",
    DeferredTask: "resource://gre/modules/DeferredTask.sys.mjs",
    DownloadsViewableInternally:
      "resource:///modules/DownloadsViewableInternally.sys.mjs",
-@@ -43,7 +43,7 @@ ChromeUtils.defineESModuleGetters(lazy, {
+@@ -43,7 +41,6 @@ ChromeUtils.defineESModuleGetters(lazy, {
    PrivateBrowsingUtils: "resource://gre/modules/PrivateBrowsingUtils.sys.mjs",
    QuickSuggest: "resource:///modules/QuickSuggest.sys.mjs",
    ScreenshotsUtils: "resource:///modules/ScreenshotsUtils.sys.mjs",
 -  SearchSERPTelemetry: "resource:///modules/SearchSERPTelemetry.sys.mjs",
-+  //SearchSERPTelemetry: "resource:///modules/SearchSERPTelemetry.sys.mjs",
    ShortcutUtils: "resource://gre/modules/ShortcutUtils.sys.mjs",
    SnapshotMonitor: "resource:///modules/SnapshotMonitor.sys.mjs",
    UrlbarPrefs: "resource:///modules/UrlbarPrefs.sys.mjs",
-@@ -62,7 +62,7 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
+@@ -62,7 +59,6 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
    ASRouter: "resource://activity-stream/lib/ASRouter.jsm",
    AsyncShutdown: "resource://gre/modules/AsyncShutdown.jsm",
    Blocklist: "resource://gre/modules/Blocklist.jsm",
 -  BrowserUsageTelemetry: "resource:///modules/BrowserUsageTelemetry.jsm",
-+  //BrowserUsageTelemetry: "resource:///modules/BrowserUsageTelemetry.jsm",
    BrowserUIUtils: "resource:///modules/BrowserUIUtils.jsm",
    BrowserWindowTracker: "resource:///modules/BrowserWindowTracker.jsm",
    ContextualIdentityService:
-@@ -101,7 +101,7 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
+@@ -93,7 +89,6 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
+   RFPHelper: "resource://gre/modules/RFPHelper.jsm",
+   SafeBrowsing: "resource://gre/modules/SafeBrowsing.jsm",
+   Sanitizer: "resource:///modules/Sanitizer.jsm",
+-  SaveToPocket: "chrome://pocket/content/SaveToPocket.jsm",
+   SessionStartup: "resource:///modules/sessionstore/SessionStartup.jsm",
+   SessionStore: "resource:///modules/sessionstore/SessionStore.jsm",
+   ShellService: "resource:///modules/ShellService.jsm",
+@@ -101,7 +96,6 @@ XPCOMUtils.defineLazyModuleGetters(lazy, {
      "resource://messaging-system/lib/SpecialMessageActions.jsm",
    TabCrashHandler: "resource:///modules/ContentCrashHandlers.jsm",
    TabUnloader: "resource:///modules/TabUnloader.jsm",
 -  TelemetryUtils: "resource://gre/modules/TelemetryUtils.jsm",
-+  //TelemetryUtils: "resource://gre/modules/TelemetryUtils.jsm",
    TRRRacer: "resource:///modules/TRRPerformance.jsm",
    UIState: "resource://services-sync/UIState.jsm",
  });
-@@ -693,23 +693,6 @@ let JSWINDOWACTORS = {
+@@ -235,7 +229,6 @@ let JSWINDOWACTORS = {
+         AboutLoginsGetHelp: { wantUntrusted: true },
+         AboutLoginsOpenPreferences: { wantUntrusted: true },
+         AboutLoginsOpenSite: { wantUntrusted: true },
+-        AboutLoginsRecordTelemetryEvent: { wantUntrusted: true },
+         AboutLoginsRemoveAllLogins: { wantUntrusted: true },
+         AboutLoginsSortChanged: { wantUntrusted: true },
+         AboutLoginsSyncEnable: { wantUntrusted: true },
+@@ -693,23 +686,6 @@ let JSWINDOWACTORS = {
      enablePreference: "screenshots.browser.component.enabled",
    },
  
@@ -65,7 +76,7 @@ index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd3672
    ShieldFrame: {
      parent: {
        moduleURI: "resource://normandy-content/ShieldFrameParent.jsm",
-@@ -1064,12 +1047,6 @@ BrowserGlue.prototype = {
+@@ -1064,12 +1040,6 @@ BrowserGlue.prototype = {
          } catch (ex) {
            Cu.reportError(ex);
          }
@@ -78,7 +89,7 @@ index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd3672
          break;
        case "browser-search-engine-modified":
          // Ensure we cleanup the hiddenOneOffs pref when removing
-@@ -1552,11 +1529,6 @@ BrowserGlue.prototype = {
+@@ -1552,48 +1522,6 @@ BrowserGlue.prototype = {
  
      ChromeUtils.addProfilerMarker("earlyBlankFirstPaint", startTime);
      win.openTime = Cu.now();
@@ -87,20 +98,330 @@ index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd3672
 -      "resource://gre/modules/TelemetryTimestamps.jsm"
 -    );
 -    TelemetryTimestamps.add("blankWindowShown");
+-  },
+-
+-  _firstWindowTelemetry(aWindow) {
+-    let scaling = aWindow.devicePixelRatio * 100;
+-    try {
+-      Services.telemetry.getHistogramById("DISPLAY_SCALING").add(scaling);
+-    } catch (ex) {}
+-  },
+-
+-  _collectStartupConditionsTelemetry() {
+-    let nowSeconds = Math.round(Date.now() / 1000);
+-    // Don't include cases where we don't have the pref. This rules out the first install
+-    // as well as the first run of a build since this was introduced. These could by some
+-    // definitions be referred to as "cold" startups, but probably not since we likely
+-    // just wrote many of the files we use to disk. This way we should approximate a lower
+-    // bound to the number of cold startups rather than an upper bound.
+-    let lastCheckSeconds = Services.prefs.getIntPref(
+-      "browser.startup.lastColdStartupCheck",
+-      nowSeconds
+-    );
+-    Services.prefs.setIntPref(
+-      "browser.startup.lastColdStartupCheck",
+-      nowSeconds
+-    );
+-    try {
+-      let secondsSinceLastOSRestart =
+-        Services.startup.secondsSinceLastOSRestart;
+-      let isColdStartup =
+-        nowSeconds - secondsSinceLastOSRestart > lastCheckSeconds;
+-      Services.telemetry.scalarSet("startup.is_cold", isColdStartup);
+-      Services.telemetry.scalarSet(
+-        "startup.seconds_since_last_os_restart",
+-        secondsSinceLastOSRestart
+-      );
+-    } catch (ex) {
+-      Cu.reportError(ex);
+-    }
    },
  
-   _firstWindowTelemetry(aWindow) {
-@@ -1983,9 +1955,6 @@ BrowserGlue.prototype = {
-           this._bookmarksBackupIdleTime = null;
+   // the first browser window has finished initializing
+@@ -1677,22 +1605,12 @@ BrowserGlue.prototype = {
+ 
+     lazy.NewTabUtils.init();
+ 
+-    Services.telemetry.setEventRecordingEnabled(
+-      "security.ui.protections",
+-      true
+-    );
+-
+     lazy.PageActions.init();
+ 
+     lazy.DoHController.init();
+ 
+     lazy.SnapshotMonitor.init();
+ 
+-    this._firstWindowTelemetry(aWindow);
+-    this._firstWindowLoaded();
+-
+-    this._collectStartupConditionsTelemetry();
+-
+     // Set the default favicon size for UI views that use the page-icon protocol.
+     lazy.PlacesUtils.favicons.setDefaultIconURIPreferredSize(
+       16 * aWindow.devicePixelRatio
+@@ -1747,10 +1665,6 @@ BrowserGlue.prototype = {
+       ContentBlockingCategoriesPrefs.PREF_CB_CATEGORY,
+       this._updateCBCategory
+     );
+-    Services.prefs.addObserver(
+-      "media.autoplay.default",
+-      this._updateAutoplayPref
+-    );
+     Services.prefs.addObserver(
+       "privacy.trackingprotection",
+       this._setPrefExpectations
+@@ -1766,17 +1680,6 @@ BrowserGlue.prototype = {
+     lazy.NimbusFeatures.tcpByDefault.onUpdate(this._setDefaultCookieBehavior);
+   },
+ 
+-  _updateAutoplayPref() {
+-    const blocked = Services.prefs.getIntPref("media.autoplay.default", 1);
+-    const telemetry = Services.telemetry.getHistogramById(
+-      "AUTOPLAY_DEFAULT_SETTING_CHANGE"
+-    );
+-    const labels = { 0: "allow", 1: "blockAudible", 5: "blockAll" };
+-    if (blocked in labels) {
+-      telemetry.add(labels[blocked]);
+-    }
+-  },
+-
+   _setDefaultCookieBehavior() {
+     let defaultPrefs = Services.prefs.getDefaultBranch("");
+ 
+@@ -1833,134 +1736,6 @@ BrowserGlue.prototype = {
+     ContentBlockingCategoriesPrefs.updateCBCategory();
+   },
+ 
+-  _recordContentBlockingTelemetry() {
+-    Services.telemetry.setEventRecordingEnabled(
+-      "security.ui.protectionspopup",
+-      Services.prefs.getBoolPref(
+-        "security.protectionspopup.recordEventTelemetry"
+-      )
+-    );
+-    Services.telemetry.setEventRecordingEnabled(
+-      "security.ui.app_menu",
+-      Services.prefs.getBoolPref("security.app_menu.recordEventTelemetry")
+-    );
+-
+-    let tpEnabled = Services.prefs.getBoolPref(
+-      "privacy.trackingprotection.enabled"
+-    );
+-    Services.telemetry
+-      .getHistogramById("TRACKING_PROTECTION_ENABLED")
+-      .add(tpEnabled);
+-
+-    let tpPBDisabled = Services.prefs.getBoolPref(
+-      "privacy.trackingprotection.pbmode.enabled"
+-    );
+-    Services.telemetry
+-      .getHistogramById("TRACKING_PROTECTION_PBM_DISABLED")
+-      .add(!tpPBDisabled);
+-
+-    let cookieBehavior = Services.prefs.getIntPref(
+-      "network.cookie.cookieBehavior"
+-    );
+-    Services.telemetry.getHistogramById("COOKIE_BEHAVIOR").add(cookieBehavior);
+-
+-    let fpEnabled = Services.prefs.getBoolPref(
+-      "privacy.trackingprotection.fingerprinting.enabled"
+-    );
+-    let cmEnabled = Services.prefs.getBoolPref(
+-      "privacy.trackingprotection.cryptomining.enabled"
+-    );
+-    let categoryPref;
+-    switch (
+-      Services.prefs.getStringPref("browser.contentblocking.category", null)
+-    ) {
+-      case "standard":
+-        categoryPref = 0;
+-        break;
+-      case "strict":
+-        categoryPref = 1;
+-        break;
+-      case "custom":
+-        categoryPref = 2;
+-        break;
+-      default:
+-        // Any other value is unsupported.
+-        categoryPref = 3;
+-        break;
+-    }
+-
+-    Services.telemetry.scalarSet(
+-      "contentblocking.fingerprinting_blocking_enabled",
+-      fpEnabled
+-    );
+-    Services.telemetry.scalarSet(
+-      "contentblocking.cryptomining_blocking_enabled",
+-      cmEnabled
+-    );
+-    Services.telemetry.scalarSet("contentblocking.category", categoryPref);
+-  },
+-
+-  _recordDataSanitizationPrefs() {
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_sanitize_sanitizeOnShutdown",
+-      Services.prefs.getBoolPref("privacy.sanitize.sanitizeOnShutdown")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_cookies",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.cookies")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_history",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.history")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_formdata",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.formdata")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_downloads",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.downloads")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_cache",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.cache")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_sessions",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.sessions")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_offlineApps",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.offlineApps")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_siteSettings",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.siteSettings")
+-    );
+-    Services.telemetry.scalarSet(
+-      "datasanitization.privacy_clearOnShutdown_openWindows",
+-      Services.prefs.getBoolPref("privacy.clearOnShutdown.openWindows")
+-    );
+-
+-    let exceptions = 0;
+-    for (let permission of Services.perms.all) {
+-      // We consider just permissions set for http, https and file URLs.
+-      if (
+-        permission.type == "cookie" &&
+-        permission.capability == Ci.nsICookiePermission.ACCESS_SESSION &&
+-        ["http", "https", "file"].some(scheme =>
+-          permission.principal.schemeIs(scheme)
+-        )
+-      ) {
+-        exceptions++;
+-      }
+-    }
+-    Services.telemetry.scalarSet(
+-      "datasanitization.session_permission_exceptions",
+-      exceptions
+-    );
+-  },
+-
+   /**
+    * Application shutdown handler.
+    */
+@@ -1984,8 +1759,6 @@ BrowserGlue.prototype = {
          }
        },
--
+ 
 -      () => lazy.BrowserUsageTelemetry.uninit(),
 -      () => lazy.SearchSERPTelemetry.uninit(),
        () => lazy.Interactions.uninit(),
        () => lazy.PageDataService.uninit(),
        () => lazy.PageThumbs.uninit(),
-@@ -2253,9 +2222,6 @@ BrowserGlue.prototype = {
+@@ -2101,7 +1874,6 @@ BrowserGlue.prototype = {
+       } else if (was_enabled) {
+         value = 2;
+       }
+-      Services.telemetry.scalarSet("security.https_only_mode_enabled", value);
+     };
+ 
+     Services.prefs.addObserver(PREF_ENABLED, _checkHTTPSOnlyPref);
+@@ -2124,10 +1896,6 @@ BrowserGlue.prototype = {
+       } else if (was_enabledPBM) {
+         valuePBM = 2;
+       }
+-      Services.telemetry.scalarSet(
+-        "security.https_only_mode_enabled_pbm",
+-        valuePBM
+-      );
+     };
+ 
+     Services.prefs.addObserver(PREF_PBM_ENABLED, _checkHTTPSOnlyPBMPref);
+@@ -2163,56 +1931,6 @@ BrowserGlue.prototype = {
+     _checkIonPref();
+   },
+ 
+-  _monitorIonStudies() {
+-    const STUDY_ADDON_COLLECTION_KEY = "pioneer-study-addons-v1";
+-    const PREF_ION_NEW_STUDIES_AVAILABLE =
+-      "toolkit.telemetry.pioneer-new-studies-available";
+-
+-    const _badgeIcon = async () => {
+-      for (let win of Services.wm.getEnumerator("navigator:browser")) {
+-        win.document
+-          .getElementById("ion-button")
+-          .querySelector(".toolbarbutton-badge")
+-          .classList.add("feature-callout");
+-      }
+-    };
+-
+-    const windowListener = {
+-      onOpenWindow(xulWindow) {
+-        const win = xulWindow.docShell.domWindow;
+-        win.addEventListener("load", () => {
+-          const ionButton = win.document.getElementById("ion-button");
+-          if (ionButton) {
+-            const badge = ionButton.querySelector(".toolbarbutton-badge");
+-            if (
+-              Services.prefs.getBoolPref(PREF_ION_NEW_STUDIES_AVAILABLE, false)
+-            ) {
+-              badge.classList.add("feature-callout");
+-            } else {
+-              badge.classList.remove("feature-callout");
+-            }
+-          }
+-        });
+-      },
+-      onCloseWindow() {},
+-    };
+-
+-    // Update all open windows if the pref changes.
+-    Services.prefs.addObserver(PREF_ION_NEW_STUDIES_AVAILABLE, _badgeIcon);
+-
+-    // Badge any currently-open windows.
+-    if (Services.prefs.getBoolPref(PREF_ION_NEW_STUDIES_AVAILABLE, false)) {
+-      _badgeIcon();
+-    }
+-
+-    lazy.RemoteSettings(STUDY_ADDON_COLLECTION_KEY).on("sync", async event => {
+-      Services.prefs.setBoolPref(PREF_ION_NEW_STUDIES_AVAILABLE, true);
+-    });
+-
+-    // When a new window opens, check if we need to badge the icon.
+-    Services.wm.addListener(windowListener);
+-  },
+-
+   _monitorGPCPref() {
+     const FEATURE_PREF_ENABLED = "privacy.globalprivacycontrol.enabled";
+     const FUNCTIONALITY_PREF_ENABLED =
+@@ -2235,10 +1953,6 @@ BrowserGlue.prototype = {
+       } else if (was_enabled) {
+         value = 2;
+       }
+-      Services.telemetry.scalarSet(
+-        "security.global_privacy_control_enabled",
+-        value
+-      );
+     };
+ 
+     Services.prefs.addObserver(FEATURE_PREF_ENABLED, _checkGPCPref);
+@@ -2253,9 +1967,6 @@ BrowserGlue.prototype = {
      }
      this._windowsWereRestored = true;
  
@@ -110,16 +431,170 @@ index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd3672
      lazy.Interactions.init();
      lazy.PageDataService.init();
      lazy.ExtensionsUI.init();
-@@ -2373,7 +2339,7 @@ BrowserGlue.prototype = {
+@@ -2314,15 +2025,6 @@ BrowserGlue.prototype = {
+       this._lateTasksIdleObserver,
+       LATE_TASKS_IDLE_TIME_SEC
+     );
+-
+-    this._monitorScreenshotsPref();
+-    this._monitorWebcompatReporterPref();
+-    this._monitorHTTPSOnlyPref();
+-    this._monitorIonPref();
+-    this._monitorIonStudies();
+-    this._setupSearchDetection();
+-
+-    this._monitorGPCPref();
+   },
+ 
+   /**
+@@ -2394,31 +2096,12 @@ BrowserGlue.prototype = {
+         },
        },
  
+-      {
+-        task: () => {
+-          this._recordContentBlockingTelemetry();
+-        },
+-      },
+-
        {
--        condition: lazy.TelemetryUtils.isTelemetryEnabled,
-+        condition: false,
          task: () => {
-           lazy.PlacesDBUtils.telemetry().catch(console.error);
+           this._recordDataSanitizationPrefs();
          },
-@@ -2844,16 +2810,6 @@ BrowserGlue.prototype = {
+       },
+ 
+-      {
+-        task: () => {
+-          let enableCertErrorUITelemetry = Services.prefs.getBoolPref(
+-            "security.certerrors.recordEventTelemetry",
+-            true
+-          );
+-          Services.telemetry.setEventRecordingEnabled(
+-            "security.ui.certerror",
+-            enableCertErrorUITelemetry
+-          );
+-        },
+-      },
+-
+       // Load the Login Manager data from disk off the main thread, some time
+       // after startup.  If the data is required before this runs, for example
+       // because a restored page contains a password field, it will be loaded on
+@@ -2441,58 +2124,6 @@ BrowserGlue.prototype = {
+         },
+       },
+ 
+-      // Report pinning status and the type of shortcut used to launch
+-      {
+-        condition: AppConstants.platform == "win",
+-        task: async () => {
+-          let shellService = Cc[
+-            "@mozilla.org/browser/shell-service;1"
+-          ].getService(Ci.nsIWindowsShellService);
+-          let winTaskbar = Cc["@mozilla.org/windows-taskbar;1"].getService(
+-            Ci.nsIWinTaskbar
+-          );
+-
+-          try {
+-            Services.telemetry.scalarSet(
+-              "os.environment.is_taskbar_pinned",
+-              await shellService.isCurrentAppPinnedToTaskbarAsync(
+-                winTaskbar.defaultGroupId
+-              )
+-            );
+-            Services.telemetry.scalarSet(
+-              "os.environment.is_taskbar_pinned_private",
+-              await shellService.isCurrentAppPinnedToTaskbarAsync(
+-                winTaskbar.defaultPrivateGroupId
+-              )
+-            );
+-          } catch (ex) {
+-            Cu.reportError(ex);
+-          }
+-
+-          let classification;
+-          let shortcut;
+-          try {
+-            shortcut = Services.appinfo.processStartupShortcut;
+-            classification = shellService.classifyShortcut(shortcut);
+-          } catch (ex) {
+-            Cu.reportError(ex);
+-          }
+-
+-          if (!classification) {
+-            if (shortcut) {
+-              classification = "OtherShortcut";
+-            } else {
+-              classification = "Other";
+-            }
+-          }
+-
+-          Services.telemetry.scalarSet(
+-            "os.environment.launch_method",
+-            classification
+-          );
+-        },
+-      },
+-
+       // Ensure a Private Browsing Shortcut exists. This is needed in case
+       // a user tries to use Windows functionality to pin our Private Browsing
+       // mode icon to the Taskbar (eg: the "Pin to Taskbar" context menu item).
+@@ -2573,19 +2204,6 @@ BrowserGlue.prototype = {
+         },
+       },
+ 
+-      // Report whether Firefox is the default handler for various files types,
+-      // in particular, ".pdf".
+-      {
+-        condition: AppConstants.platform == "win",
+-        task: () => {
+-          Services.telemetry.keyedScalarSet(
+-            "os.environment.is_default_handler",
+-            ".pdf",
+-            lazy.ShellService.isDefaultHandlerFor(".pdf")
+-          );
+-        },
+-      },
+-
+       // Install built-in themes. We already installed the active built-in
+       // theme, if any, before UI startup.
+       {
+@@ -2611,23 +2229,6 @@ BrowserGlue.prototype = {
+         },
+       },
+ 
+-      // Report macOS Dock status
+-      {
+-        condition: AppConstants.platform == "macosx",
+-        task: () => {
+-          try {
+-            Services.telemetry.scalarSet(
+-              "os.environment.is_kept_in_dock",
+-              Cc["@mozilla.org/widget/macdocksupport;1"].getService(
+-                Ci.nsIMacDockSupport
+-              ).isAppInDock
+-            );
+-          } catch (ex) {
+-            Cu.reportError(ex);
+-          }
+-        },
+-      },
+-
+       {
+         task: () => {
+           this._maybeShowDefaultBrowserPrompt();
+@@ -2806,11 +2407,6 @@ BrowserGlue.prototype = {
+         },
+       },
+ 
+-      {
+-        task: () => {
+-          this._collectTelemetryPiPEnabled();
+-        },
+-      },
+       // Schedule a sync (if enabled) after we've loaded
+       {
+         task: async () => {
+@@ -2844,16 +2440,6 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -136,7 +611,28 @@ index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd3672
        {
          task: () => {
            // Use idleDispatch a second time to run this after the per-window
-@@ -2951,14 +2907,10 @@ BrowserGlue.prototype = {
+@@ -2907,20 +2493,6 @@ BrowserGlue.prototype = {
+    */
+   _scheduleBestEffortUserIdleTasks() {
+     const idleTasks = [
+-      () => {
+-        // Telemetry for primary-password - we do this after a delay as it
+-        // can cause IO if NSS/PSM has not already initialized.
+-        let tokenDB = Cc["@mozilla.org/security/pk11tokendb;1"].getService(
+-          Ci.nsIPK11TokenDB
+-        );
+-        let token = tokenDB.getInternalKeyToken();
+-        let mpEnabled = token.hasPassword;
+-        if (mpEnabled) {
+-          Services.telemetry
+-            .getHistogramById("MASTER_PASSWORD_ENABLED")
+-            .add(mpEnabled);
+-        }
+-      },
+ 
+       () => {
+         let { GMPInstallManager } = ChromeUtils.importESModule(
+@@ -2951,13 +2523,9 @@ BrowserGlue.prototype = {
          }
        },
  
@@ -145,9 +641,215 @@ index b2479db7d881902c6ec86322d600054f1e813651..53ed5b563251495b6582fd1751bd3672
        () => lazy.OsEnvironment.reportAllowedAppSources(),
  
        () => Services.search.runBackgroundChecks(),
- 
--      () => lazy.BrowserUsageTelemetry.reportInstallationTelemetry(),
 -
-       async () => {
-         let win = lazy.BrowserWindowTracker.getTopWindow({ private: false });
-         if (!win) {
+-      () => lazy.BrowserUsageTelemetry.reportInstallationTelemetry(),
+     ];
+ 
+     for (let task of idleTasks) {
+@@ -3153,26 +2721,11 @@ BrowserGlue.prototype = {
+       checkboxLabel,
+       warnOnClose
+     );
+-    Services.telemetry.setEventRecordingEnabled("close_tab_warning", true);
+     let warnCheckbox = warnOnClose.value ? "checked" : "unchecked";
+ 
+     let sessionWillBeRestored =
+       Services.prefs.getIntPref("browser.startup.page") == 3 ||
+       Services.prefs.getBoolPref("browser.sessionstore.resume_session_once");
+-    Services.telemetry.recordEvent(
+-      "close_tab_warning",
+-      "shown",
+-      "application",
+-      null,
+-      {
+-        source: this._quitSource,
+-        button: buttonPressed == 0 ? "close" : "cancel",
+-        warn_checkbox: warnCheckbox,
+-        closing_wins: "" + windowcount,
+-        closing_tabs: "" + (pagecount + pinnedcount),
+-        will_restore: sessionWillBeRestored ? "yes" : "no",
+-      }
+-    );
+ 
+     // If the user has unticked the box, and has confirmed closing, stop showing
+     // the warning.
+@@ -4403,15 +3956,6 @@ BrowserGlue.prototype = {
+       return showUpgradeDialog ? "" : "disabled";
+     })();
+ 
+-    // Record why the dialog is showing or not.
+-    Services.telemetry.setEventRecordingEnabled("upgrade_dialog", true);
+-    Services.telemetry.recordEvent(
+-      "upgrade_dialog",
+-      "trigger",
+-      "reason",
+-      dialogReason || "satisfied"
+-    );
+-
+     // Show the upgrade dialog if allowed and remember the version.
+     if (!dialogReason) {
+       Services.prefs.setIntPref(dialogVersionPref, dialogVersion);
+@@ -4786,42 +4330,6 @@ BrowserGlue.prototype = {
+     }
+   },
+ 
+-  _collectTelemetryPiPEnabled() {
+-    Services.telemetry.setEventRecordingEnabled(
+-      "pictureinpicture.settings",
+-      true
+-    );
+-    Services.telemetry.setEventRecordingEnabled("pictureinpicture", true);
+-
+-    const TOGGLE_ENABLED_PREF =
+-      "media.videocontrols.picture-in-picture.video-toggle.enabled";
+-
+-    const observe = (subject, topic, data) => {
+-      const enabled = Services.prefs.getBoolPref(TOGGLE_ENABLED_PREF, false);
+-      Services.telemetry.scalarSet("pictureinpicture.toggle_enabled", enabled);
+-
+-      // Record events when preferences change
+-      if (topic === "nsPref:changed") {
+-        if (enabled) {
+-          Services.telemetry.recordEvent(
+-            "pictureinpicture.settings",
+-            "enable",
+-            "player"
+-          );
+-        } else {
+-          Services.telemetry.recordEvent(
+-            "pictureinpicture.settings",
+-            "disable",
+-            "player"
+-          );
+-        }
+-      }
+-    };
+-
+-    Services.prefs.addObserver(TOGGLE_ENABLED_PREF, observe);
+-    observe();
+-  },
+-
+   QueryInterface: ChromeUtils.generateQI([
+     "nsIObserver",
+     "nsISupportsWeakReference",
+@@ -5386,95 +4894,7 @@ var DefaultBrowserCheck = {
+ 
+     // Even if we shouldn't check the default browser, we still continue when
+     // isStartupCheck = true to set prefs and telemetry.
+-    if (!shouldCheck && !isStartupCheck) {
+-      return false;
+-    }
+-
+-    // Skip the "Set Default Browser" check during first-run or after the
+-    // browser has been run a few times.
+-    const skipDefaultBrowserCheck =
+-      Services.prefs.getBoolPref(
+-        "browser.shell.skipDefaultBrowserCheckOnFirstRun"
+-      ) &&
+-      !Services.prefs.getBoolPref(
+-        "browser.shell.didSkipDefaultBrowserCheckOnFirstRun"
+-      );
+-
+-    let promptCount = Services.prefs.getIntPref(
+-      "browser.shell.defaultBrowserCheckCount",
+-      0
+-    );
+-
+-    // If SessionStartup's state is not initialized, checking sessionType will set
+-    // its internal state to "do not restore".
+-    await lazy.SessionStartup.onceInitialized;
+-    let willRecoverSession =
+-      lazy.SessionStartup.sessionType == lazy.SessionStartup.RECOVER_SESSION;
+-
+-    // Don't show the prompt if we're already the default browser.
+-    let isDefault = false;
+-    let isDefaultError = false;
+-    try {
+-      isDefault = shellService.isDefaultBrowser(isStartupCheck, false);
+-    } catch (ex) {
+-      isDefaultError = true;
+-    }
+-
+-    if (isDefault && isStartupCheck) {
+-      let now = Math.floor(Date.now() / 1000).toString();
+-      Services.prefs.setCharPref(
+-        "browser.shell.mostRecentDateSetAsDefault",
+-        now
+-      );
+-    }
+-
+-    let willPrompt = shouldCheck && !isDefault && !willRecoverSession;
+-
+-    if (willPrompt) {
+-      if (skipDefaultBrowserCheck) {
+-        if (isStartupCheck) {
+-          Services.prefs.setBoolPref(
+-            "browser.shell.didSkipDefaultBrowserCheckOnFirstRun",
+-            true
+-          );
+-        }
+-        willPrompt = false;
+-      } else {
+-        promptCount++;
+-        if (isStartupCheck) {
+-          Services.prefs.setIntPref(
+-            "browser.shell.defaultBrowserCheckCount",
+-            promptCount
+-          );
+-        }
+-        if (!AppConstants.RELEASE_OR_BETA && promptCount > 3) {
+-          willPrompt = false;
+-        }
+-      }
+-    }
+-
+-    if (isStartupCheck) {
+-      try {
+-        // Report default browser status on startup to telemetry
+-        // so we can track whether we are the default.
+-        Services.telemetry
+-          .getHistogramById("BROWSER_IS_USER_DEFAULT")
+-          .add(isDefault);
+-        Services.telemetry
+-          .getHistogramById("BROWSER_IS_USER_DEFAULT_ERROR")
+-          .add(isDefaultError);
+-        Services.telemetry
+-          .getHistogramById("BROWSER_SET_DEFAULT_ALWAYS_CHECK")
+-          .add(shouldCheck);
+-        Services.telemetry
+-          .getHistogramById("BROWSER_SET_DEFAULT_DIALOG_PROMPT_RAWCOUNT")
+-          .add(promptCount);
+-      } catch (ex) {
+-        /* Don't break the default prompt if telemetry is broken. */
+-      }
+-    }
+-
+-    return willPrompt;
++    return false;
+   },
+ };
+ 
+@@ -5837,11 +5257,6 @@ var AboutHomeStartupCache = {
+       this._cacheTask.arm();
+     }
+ 
+-    Services.telemetry.scalarSet(
+-      "browser.startup.abouthome_cache_shutdownwrite",
+-      this._cacheTask.isArmed
+-    );
+-
+     if (this._cacheTask.isArmed) {
+       this.log.trace("Finalizing cache task on shutdown");
+       this._finalized = true;
+@@ -6341,10 +5756,7 @@ var AboutHomeStartupCache = {
+   recordResult(result) {
+     // Note: this can be called very early on in the lifetime of
+     // AboutHomeStartupCache, so things like this.log might not exist yet.
+-    Services.telemetry.scalarSet(
+-      "browser.startup.abouthome_cache_result",
+-      result
+-    );
++    
+   },
+ 
+   /**
