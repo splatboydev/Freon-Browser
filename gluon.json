@@ -11,7 +11,25 @@
     "windowsUseSymbolicLinks": false
   },
   "addons": {},
-  "brands": {},
+  "brands": {
+    "freon": {
+      "backgroundColor": "#37a5f8",
+      "brandShorterName": "Freon",
+      "brandShortName": "Freon Browser",
+      "brandFullName": "Freon Browser",
+      "release": {
+        "displayVersion": "1.0.0",
+        "github": {
+          "repo": "splatboydev/Freon-Browser"
+        },
+        "x86": {
+          "windowsMar": "windows.mar",
+          "macosMar": "macosIntel.mar",
+          "linuxMar": "linux.mar"
+        }
+      }
+    }
+  },
   "license": {
     "ignoredFiles": [
       ".*\\.json"
