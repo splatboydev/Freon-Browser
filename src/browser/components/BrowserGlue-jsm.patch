@@ -1,5 +1,5 @@
 diff --git a/browser/components/BrowserGlue.jsm b/browser/components/BrowserGlue.jsm
-index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527637d8e16 100644
+index e346e2585aae9518618745873c8c20cd0f1f53a1..8c5578364c5f013a9c44fa0b419f020af9fff9fa 100644
 --- a/browser/components/BrowserGlue.jsm
 +++ b/browser/components/BrowserGlue.jsm
 @@ -23,9 +23,7 @@ ChromeUtils.defineESModuleGetters(lazy, {
@@ -89,7 +89,16 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
          break;
        case "browser-search-engine-modified":
          // Ensure we cleanup the hiddenOneOffs pref when removing
-@@ -1552,48 +1522,6 @@ BrowserGlue.prototype = {
+@@ -1274,8 +1244,6 @@ BrowserGlue.prototype = {
+       lazy.Normandy.init();
+     }
+ 
+-    lazy.SaveToPocket.init();
+-
+     AboutHomeStartupCache.init();
+ 
+     Services.obs.notifyObservers(null, "browser-ui-startup-complete");
+@@ -1552,48 +1520,6 @@ BrowserGlue.prototype = {
  
      ChromeUtils.addProfilerMarker("earlyBlankFirstPaint", startTime);
      win.openTime = Cu.now();
@@ -138,7 +147,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    },
  
    // the first browser window has finished initializing
-@@ -1677,22 +1605,12 @@ BrowserGlue.prototype = {
+@@ -1677,22 +1603,12 @@ BrowserGlue.prototype = {
  
      lazy.NewTabUtils.init();
  
@@ -161,7 +170,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      // Set the default favicon size for UI views that use the page-icon protocol.
      lazy.PlacesUtils.favicons.setDefaultIconURIPreferredSize(
        16 * aWindow.devicePixelRatio
-@@ -1747,10 +1665,6 @@ BrowserGlue.prototype = {
+@@ -1747,10 +1663,6 @@ BrowserGlue.prototype = {
        ContentBlockingCategoriesPrefs.PREF_CB_CATEGORY,
        this._updateCBCategory
      );
@@ -172,7 +181,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      Services.prefs.addObserver(
        "privacy.trackingprotection",
        this._setPrefExpectations
-@@ -1766,17 +1680,6 @@ BrowserGlue.prototype = {
+@@ -1766,17 +1678,6 @@ BrowserGlue.prototype = {
      lazy.NimbusFeatures.tcpByDefault.onUpdate(this._setDefaultCookieBehavior);
    },
  
@@ -190,7 +199,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    _setDefaultCookieBehavior() {
      let defaultPrefs = Services.prefs.getDefaultBranch("");
  
-@@ -1833,134 +1736,6 @@ BrowserGlue.prototype = {
+@@ -1833,134 +1734,6 @@ BrowserGlue.prototype = {
      ContentBlockingCategoriesPrefs.updateCBCategory();
    },
  
@@ -325,7 +334,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    /**
     * Application shutdown handler.
     */
-@@ -1984,8 +1759,6 @@ BrowserGlue.prototype = {
+@@ -1984,8 +1757,6 @@ BrowserGlue.prototype = {
          }
        },
  
@@ -334,7 +343,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        () => lazy.Interactions.uninit(),
        () => lazy.PageDataService.uninit(),
        () => lazy.PageThumbs.uninit(),
-@@ -2101,7 +1874,6 @@ BrowserGlue.prototype = {
+@@ -2101,7 +1872,6 @@ BrowserGlue.prototype = {
        } else if (was_enabled) {
          value = 2;
        }
@@ -342,7 +351,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      };
  
      Services.prefs.addObserver(PREF_ENABLED, _checkHTTPSOnlyPref);
-@@ -2124,10 +1896,6 @@ BrowserGlue.prototype = {
+@@ -2124,10 +1894,6 @@ BrowserGlue.prototype = {
        } else if (was_enabledPBM) {
          valuePBM = 2;
        }
@@ -353,7 +362,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      };
  
      Services.prefs.addObserver(PREF_PBM_ENABLED, _checkHTTPSOnlyPBMPref);
-@@ -2163,56 +1931,6 @@ BrowserGlue.prototype = {
+@@ -2163,56 +1929,6 @@ BrowserGlue.prototype = {
      _checkIonPref();
    },
  
@@ -410,7 +419,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    _monitorGPCPref() {
      const FEATURE_PREF_ENABLED = "privacy.globalprivacycontrol.enabled";
      const FUNCTIONALITY_PREF_ENABLED =
-@@ -2235,10 +1953,6 @@ BrowserGlue.prototype = {
+@@ -2235,10 +1951,6 @@ BrowserGlue.prototype = {
        } else if (was_enabled) {
          value = 2;
        }
@@ -421,7 +430,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      };
  
      Services.prefs.addObserver(FEATURE_PREF_ENABLED, _checkGPCPref);
-@@ -2253,9 +1967,6 @@ BrowserGlue.prototype = {
+@@ -2253,9 +1965,6 @@ BrowserGlue.prototype = {
      }
      this._windowsWereRestored = true;
  
@@ -431,7 +440,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      lazy.Interactions.init();
      lazy.PageDataService.init();
      lazy.ExtensionsUI.init();
-@@ -2314,15 +2025,6 @@ BrowserGlue.prototype = {
+@@ -2314,15 +2023,6 @@ BrowserGlue.prototype = {
        this._lateTasksIdleObserver,
        LATE_TASKS_IDLE_TIME_SEC
      );
@@ -447,7 +456,21 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    },
  
    /**
-@@ -2394,31 +2096,12 @@ BrowserGlue.prototype = {
+@@ -2372,13 +2072,6 @@ BrowserGlue.prototype = {
+         },
+       },
+ 
+-      {
+-        condition: lazy.TelemetryUtils.isTelemetryEnabled,
+-        task: () => {
+-          lazy.PlacesDBUtils.telemetry().catch(console.error);
+-        },
+-      },
+-
+       // Begin listening for incoming push messages.
+       {
+         task: () => {
+@@ -2394,31 +2087,12 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -479,7 +502,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        // Load the Login Manager data from disk off the main thread, some time
        // after startup.  If the data is required before this runs, for example
        // because a restored page contains a password field, it will be loaded on
-@@ -2441,58 +2124,6 @@ BrowserGlue.prototype = {
+@@ -2441,58 +2115,6 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -538,7 +561,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        // Ensure a Private Browsing Shortcut exists. This is needed in case
        // a user tries to use Windows functionality to pin our Private Browsing
        // mode icon to the Taskbar (eg: the "Pin to Taskbar" context menu item).
-@@ -2573,19 +2204,6 @@ BrowserGlue.prototype = {
+@@ -2573,19 +2195,6 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -558,7 +581,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        // Install built-in themes. We already installed the active built-in
        // theme, if any, before UI startup.
        {
-@@ -2611,23 +2229,6 @@ BrowserGlue.prototype = {
+@@ -2611,23 +2220,6 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -582,7 +605,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        {
          task: () => {
            this._maybeShowDefaultBrowserPrompt();
-@@ -2806,11 +2407,6 @@ BrowserGlue.prototype = {
+@@ -2806,11 +2398,6 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -594,7 +617,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        // Schedule a sync (if enabled) after we've loaded
        {
          task: async () => {
-@@ -2844,16 +2440,6 @@ BrowserGlue.prototype = {
+@@ -2844,16 +2431,6 @@ BrowserGlue.prototype = {
          },
        },
  
@@ -611,7 +634,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
        {
          task: () => {
            // Use idleDispatch a second time to run this after the per-window
-@@ -2907,20 +2493,6 @@ BrowserGlue.prototype = {
+@@ -2907,20 +2484,6 @@ BrowserGlue.prototype = {
     */
    _scheduleBestEffortUserIdleTasks() {
      const idleTasks = [
@@ -632,7 +655,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
  
        () => {
          let { GMPInstallManager } = ChromeUtils.importESModule(
-@@ -2951,13 +2523,9 @@ BrowserGlue.prototype = {
+@@ -2951,13 +2514,9 @@ BrowserGlue.prototype = {
          }
        },
  
@@ -646,7 +669,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      ];
  
      for (let task of idleTasks) {
-@@ -3153,26 +2721,11 @@ BrowserGlue.prototype = {
+@@ -3153,26 +2712,11 @@ BrowserGlue.prototype = {
        checkboxLabel,
        warnOnClose
      );
@@ -673,7 +696,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
  
      // If the user has unticked the box, and has confirmed closing, stop showing
      // the warning.
-@@ -4403,15 +3956,6 @@ BrowserGlue.prototype = {
+@@ -4403,15 +3947,6 @@ BrowserGlue.prototype = {
        return showUpgradeDialog ? "" : "disabled";
      })();
  
@@ -689,7 +712,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      // Show the upgrade dialog if allowed and remember the version.
      if (!dialogReason) {
        Services.prefs.setIntPref(dialogVersionPref, dialogVersion);
-@@ -4786,42 +4330,6 @@ BrowserGlue.prototype = {
+@@ -4786,42 +4321,6 @@ BrowserGlue.prototype = {
      }
    },
  
@@ -732,7 +755,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    QueryInterface: ChromeUtils.generateQI([
      "nsIObserver",
      "nsISupportsWeakReference",
-@@ -5386,95 +4894,7 @@ var DefaultBrowserCheck = {
+@@ -5386,95 +4885,7 @@ var DefaultBrowserCheck = {
  
      // Even if we shouldn't check the default browser, we still continue when
      // isStartupCheck = true to set prefs and telemetry.
@@ -829,7 +852,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
    },
  };
  
-@@ -5837,11 +5257,6 @@ var AboutHomeStartupCache = {
+@@ -5837,11 +5248,6 @@ var AboutHomeStartupCache = {
        this._cacheTask.arm();
      }
  
@@ -841,7 +864,7 @@ index e346e2585aae9518618745873c8c20cd0f1f53a1..8d15b4713511a88827041f2f04745527
      if (this._cacheTask.isArmed) {
        this.log.trace("Finalizing cache task on shutdown");
        this._finalized = true;
-@@ -6341,10 +5756,7 @@ var AboutHomeStartupCache = {
+@@ -6341,10 +5747,7 @@ var AboutHomeStartupCache = {
    recordResult(result) {
      // Note: this can be called very early on in the lifetime of
      // AboutHomeStartupCache, so things like this.log might not exist yet.
